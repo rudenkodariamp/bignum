@@ -129,8 +129,9 @@ bignum bigsubz(bignum a1, bignum a2) {
     }
     //a<0 b<0 =  |b|-|a| 
     if (a1.sign&&a2.sign) {
-        res =bigsubbz(a2,a1);
-        res.sign = 1 - res.sign;
+        res = bigsubbz(a2,a1);
+//        res.sign = 1 - res.sign;
+        res.sign = res.sign;
     }
     if (!a1.sign && !a2.sign) {
         res = bigsubbz(a1,a2);    
@@ -265,14 +266,14 @@ bignum bigdiv(bignum a1, bignum a2)
 {
     if (a2.size == 0) 
         exit(1);
+    bignum res = allocmem(a1.size);
+    if ((a1.sign&&a2.sign)||(!a1.sign&&!a2.sign)) res.sign=0; else res.sign=1;
+    a2.sign = a1.sign = 0;
     if (bigcompare(a1,a2) < 0) {
         bignum zero=allocmem(0);
         return zero;
     }
-    bignum res = allocmem(a1.size);
-    if ((a1.sign&&a2.sign)||(!a1.sign&&!a2.sign)) res.sign=0; else res.sign=1;
     bignum curvalue  = allocmem(a1.size);
-    a2.sign = a1.sign = 0;
     curvalue.size = 1;
     int i;  
     for (i = a1.size-1; i>=0; i--)  {
