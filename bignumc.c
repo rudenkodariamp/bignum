@@ -130,7 +130,6 @@ bignum bigsubz(bignum a1, bignum a2) {
     //a<0 b<0 =  |b|-|a| 
     if (a1.sign&&a2.sign) {
         res = bigsubbz(a2,a1);
-//        res.sign = 1 - res.sign;
         res.sign = res.sign;
     }
     if (!a1.sign && !a2.sign) {
