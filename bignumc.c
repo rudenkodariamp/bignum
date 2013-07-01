@@ -145,9 +145,13 @@ bignum bigsubbz(bignum a1, bignum a2) {
         a2 = tmp;        
         res.sign = 1;
     }
-    int i,c=0;
+    int i,c=0,j,k;
     for (i=0;i<a1.size;++i) {
-        c+=a1.d[i]-a2.d[i]+10;
+	j=a1.d[i];
+	k=a2.d[i];
+	if (i > a1.size) j = 0;
+	if (i > a2.size) k = 0;
+        c+=j-k+10;
         res.d[i]=c%10;
         if (c<10) c=-1; else c=0;
     }
