@@ -194,7 +194,7 @@ bignum bigaddbz(bignum a1, bignum a2) {
         res.d[m]=c;
    }
     res.size=m;
-    if (res.d[m-1] == 0) res.d[m-1] = 1;
+    if ((res.d[m-1] == 0) && (m>1)) res.d[m-1] = 1;
     return res;
 }
 //умножение
