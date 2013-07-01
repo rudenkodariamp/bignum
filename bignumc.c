@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "bignumc.h"
+
 // поиск максимального
 int max(int a, int b) {
     return (a > b ? a : b);
@@ -57,7 +58,7 @@ bignum allocmem(int size) {
 	bignum res;
 	res.sign = 0;
 	res.size = size;
-	res.d = calloc(size, 1); 
+	res.d = calloc(size, 2); 
 	if (res.d == NULL) {
 		printf("alloc err\n");
 		exit(1);
@@ -139,6 +140,8 @@ bignum bigsubz(bignum a1, bignum a2) {
 //вычитание беззнаковое
 bignum bigsubbz(bignum a1, bignum a2) {
     bignum res = allocmem(max(a1.size, a2.size));
+    a1.sign = 0;
+    a2.sign = 0;
     if (bigcompare(a1, a2) == -1) {
         bignum tmp = a1;
         a1 = a2;
@@ -260,15 +263,15 @@ bignum bigmultoint(bignum a1, int a2) {
 //деление
 bignum bigdiv(bignum a1, bignum a2)
 {
-    if (a2.size == 0)
+    if (a2.size == 0) 
         exit(1);
     if (bigcompare(a1,a2) < 0) {
         bignum zero=allocmem(0);
         return zero;
     }
-    bignum res = allocmem(a1.size-a2.size+1);
+    bignum res = allocmem(a1.size);
     if ((a1.sign&&a2.sign)||(!a1.sign&&!a2.sign)) res.sign=0; else res.sign=1;
-    bignum curvalue  = allocmem(a2.size + 1);
+    bignum curvalue  = allocmem(a1.size);
     a2.sign = a1.sign = 0;
     curvalue.size = 1;
     int i;  
