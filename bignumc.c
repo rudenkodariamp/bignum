@@ -178,16 +178,23 @@ bignum bigaddz(bignum a1, bignum a2) {
 }
 //сложение беззнаковое
 bignum bigaddbz(bignum a1, bignum a2) { 
-    bignum res = allocmem(max(a1.size, a2.size));
-    int i,c=0,m=max(a1.size,a2.size);
+    bignum res = allocmem(max(a1.size, a2.size)+1);
+    int i,c=0,j,k,m=max(a1.size,a2.size); 
     for (i=0;i<m;++i) {
-        c+=a1.d[i]+a2.d[i];
+	j=a1.d[i];
+	k=a2.d[i];
+	if (i > a1.size) j = 0;
+	if (i > a2.size) k = 0;
+        c+=j+k;
         res.d[i]=c%10;
         c/=10;
     }
-    if (c>0) 
+    if (c>0) {
+	m=m+1;
         res.d[m]=c;
+   }
     res.size=m;
+    if (res.d[m-1] == 0) res.d[m-1] = 1;
     return res;
 }
 //умножение
