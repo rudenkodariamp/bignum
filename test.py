@@ -14,6 +14,8 @@ elif op == "-":
 elif op == "*":
 	res = first * second
 elif op == "/":
+	if second == first - first:
+		print 'Division by zero!'
 	res = first / second
 elif op == "%":
 	res = first % second
